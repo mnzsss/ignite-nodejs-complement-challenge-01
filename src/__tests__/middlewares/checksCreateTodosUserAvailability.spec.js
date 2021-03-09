@@ -2,7 +2,7 @@ const { v4 } = require('uuid');
 
 const {
   users,
-  checksCreateTodosUserAvailability
+  checksCreateTodosUserAvailability,
 } = require('../../');
 
 let response;
@@ -13,28 +13,22 @@ describe('checksCreateTodosUserAvailability', () => {
   beforeEach(() => {
     users.splice(0, users.length);
 
-    request = (params) => {
-      return {
-        ...params
-      }
-    };
+    request = (params) => ({
+      ...params,
+    });
 
     response = () => {
-      const response = {}
+      const response = {};
 
-      response.status = jest.fn((code) => {
-        return {
-          ...response,
-          statusCode: code
-        }
-      });
+      response.status = jest.fn((code) => ({
+        ...response,
+        statusCode: code,
+      }));
 
-      response.json = jest.fn((obj) => {
-        return {
-          ...response,
-          body: obj
-        }
-      });
+      response.json = jest.fn((obj) => ({
+        ...response,
+        body: obj,
+      }));
 
       return response;
     };
@@ -49,8 +43,8 @@ describe('checksCreateTodosUserAvailability', () => {
         name: 'Atlas',
         username: 'atlas',
         pro: false,
-        todos: []
-      }
+        todos: [],
+      },
     });
 
     const mockResponse = response();
@@ -72,9 +66,9 @@ describe('checksCreateTodosUserAvailability', () => {
           title: 'Todo',
           deadline: new Date(),
           done: false,
-          created_at: new Date()
-        }))
-      }
+          created_at: new Date(),
+        })),
+      },
     });
 
     const mockResponse = response();
@@ -96,9 +90,9 @@ describe('checksCreateTodosUserAvailability', () => {
           title: 'Todo',
           deadline: new Date(),
           done: false,
-          created_at: new Date()
+          created_at: new Date(),
         })),
-      }
+      },
     });
 
     const mockResponse = response();
@@ -107,4 +101,4 @@ describe('checksCreateTodosUserAvailability', () => {
 
     expect(mockNext).toBeCalled();
   });
-})
+});
